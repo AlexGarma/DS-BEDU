@@ -1,15 +1,15 @@
 SHOW DATABASES;
 USE tienda;
 SHOW TABLES;
+
+# Reto 1
+# Usando la base de datos tienda, muestra la descripción de las tablas articulo, puesto y venta.
 DESCRIBE empleado;
 DESCRIBE puesto;
 DESCRIBE articulo;
 DESCRIBE puesto;
 DESCRIBE venta;
 
-USE tienda;
-SHOW TABLES;
-USE empleado;
 SELECT * FROM empleado;
 SELECT nombre FROM empleado ;
 SELECT nombre,apellido_paterno FROM empleado;
@@ -20,8 +20,7 @@ SELECT * FROM empleado WHERE id_puesto > 100 AND id_puesto <= 200;
 SELECT * FROM empleado WHERE id_puesto = 100 OR id_puesto = 200;
 SELECT * FROM empleado WHERE id_puesto IN(100,200,300);
 
-# Reto
-
+# Reto 2
 #Usando la base de datos tienda, escribe consultas que permitan responder las siguientes preguntas.
 
 #¿Cuál es el nombre de los empleados con el puesto 4?
@@ -42,3 +41,10 @@ SELECT *
 FROM venta
 WHERE id_articulo IN (135,963)
 AND id_empleado IN (835,369);
+
+# Reto 3
+# Usando la base de datos tienda, escribe una consulta que permita obtener el top 5 de puestos por salarios.
+SELECT *
+FROM puesto
+ORDER BY salario DESC
+LIMIT 5 ;
