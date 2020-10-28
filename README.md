@@ -1,2 +1,2 @@
 # DS-BEDU
-Retos y ejercicios del curso Santander-BEDU
+Retos y ejercicios del curso Santander-BEDU:Data Sience
