@@ -89,7 +89,9 @@ SELECT orderNumber, SUM(quantityOrdered*priceEach) AS total
 FROM orderdetails
 GROUP BY orderNumber;
 -- Dentro de la tabla orders obten el número de órdenes por año.
-
+SELECT YEAR(orderDate) AS ano, COUNT(*) AS ordenes
+FROM orders
+GROUP BY YEAR(orderDate);
 -- Obten el apellido y nombre de los empleados cuya oficina está ubicada en USA.
 
 -- Obten el número de cliente, número de cheque y cantidad del cliente que ha realizado el pago más alto.
