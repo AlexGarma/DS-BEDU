@@ -72,4 +72,3 @@ IN
 	(SELECT customerNumber
     FROM orders)
 GROUP BY state;
-
