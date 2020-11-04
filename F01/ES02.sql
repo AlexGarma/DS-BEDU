@@ -33,7 +33,7 @@ GROUP BY orderNumber;
 SELECT YEAR(orderDate) AS ano, COUNT(*) AS ordenes
 FROM orders
 GROUP BY YEAR(orderDate);
--- Obten el apellido y nombre de los empleados cuya oficina está ubicada en USA.
+-- Obten el apellido y nombre de los empleados cuya oficina está ubicada en USA.**s
 SELECT lastName, firstName
 FROM employees
 WHERE officeCode IN 
@@ -46,9 +46,30 @@ FROM payments
 ORDER BY amount DESC
 LIMIT 1;
 -- Obten el número de cliente, número de cheque y cantidad de aquellos clientes cuyo pago es más alto que el promedio.
-
+SELECT customerNumber, checkNumber, amount
+FROM payments
+WHERE amount > 
+	(SELECT AVG(amount) 
+    FROM payments );
 -- Obten el nombre de aquellos clientes que no han hecho ninguna orden.
+SELECT customerName
+FROM customers
+WHERE customerNumber 
+NOT IN 
+	(SELECT customerNumber
+    FROM orders);
+-- Obten el máximo, mínimo y promedio del número de productos en las órdenes de venta.***
+SELECT MAX(no_productos) AS max, MIN(no_productos) AS min, AVG(no_productos) as promedio
+FROM 
+	(SELECT productCode, COUNT(*) AS no_productos
+	FROM orderdetails
+	GROUP BY productCode) AS p1;
+-- Dentro de la tabla orders, obten el número de órdenes que hay por cada estado.***
+SELECT state, COUNT(*) AS no_ordenes
+FROM customers
+WHERE customerNumber
+IN
+	(SELECT customerNumber
+    FROM orders)
+GROUP BY state;
 
--- Obten el máximo, mínimo y promedio del número de productos en las órdenes de venta.
-
--- Dentro de la tabla orders, obten el número de órdenes que hay por cada estado.
