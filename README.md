@@ -1,2 +1,2 @@
 # DS-BEDU
-Retos y ejercicios del curso Santander-BEDU:Data Sience
+Ejercicios y retos del programa:  Santander - BEDU - Disruptive Innovation. Data Sience.
