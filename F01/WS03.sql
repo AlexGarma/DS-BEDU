@@ -1,5 +1,4 @@
 -- Retos
-
 USE tienda;
 -- Reto 1 
 
@@ -10,7 +9,7 @@ FROM empleado
 WHERE id_puesto  IN
 	(SELECT id_puesto 
     FROM puesto
-    WHERE salario < 1e4);
+    WHERE salario < 1e5);
 -- ¿Cuál es la cantidad mínima y máxima de ventas de cada empleado?
 SELECT id_empleado, MAX(ventas) AS max, MIN(ventas) AS min
 FROM
@@ -29,7 +28,7 @@ IN
 
 -- Reto 2 
 -- ¿Cuál es el nombre de los empleados que realizaron cada venta?
-SELECT clave, id_venta, nombre, apellido_paterno
+SELECT clave, nombre, apellido_paterno
 FROM venta 
 JOIN empleado 
 USING(id_empleado)
@@ -46,3 +45,30 @@ FROM venta
 JOIN articulo
 USING(id_articulo)
 GROUP BY clave ;
+
+-- Reto 3
+-- Obtener el puesto de un empleado.
+CREATE VIEW empleado_puesto119 AS(
+SELECT e.nombre AS empleado, p.nombre AS puesto
+FROM empleado AS e
+JOIN puesto AS p
+USING(id_puesto));
+-- Saber qué artículos ha vendido cada empleado.
+CREATE VIEW empleado_articulo119 AS(
+SELECT e.nombre AS empleado, a.nombre AS articulo
+FROM venta AS v
+JOIN articulo AS a
+USING(id_articulo)
+JOIN empleado AS e
+USING(id_empleado) );
+-- Saber qué puesto ha tenido más ventas***.
+CREATE VIEW puesto_ventas119 AS(
+SELECT p.nombre as puesto, COUNT(*) AS ventas
+FROM venta AS v
+JOIN empleado AS e
+USING(id_empleado)
+JOIN puesto as p
+USING(id_puesto)
+GROUP BY p.nombre
+ORDER BY ventas DESC
+LIMIT 1) ;
