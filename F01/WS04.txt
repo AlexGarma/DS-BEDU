@@ -1,0 +1,92 @@
+Reto 1
+
+Usando la base de datos sample_mflix, proyecta los datos que se solicitan.
+
+Fecha, nombre y texto de cada comentario.
+
+{
+ project: {
+  date: 1,
+  name: 1,
+  text: 1
+ }
+}
+
+Título, elenco y año de cada película.
+
+{
+ project: {
+  title: 1,
+  cast: 1,
+  year: 1
+ }
+}
+
+Nombre y contraseña de cada usuario.
+{
+ project: {
+  name: 1,
+  password: 1
+ }
+}
+
+Reto 2
+
+Usando la base de datos sample_mflix, agrega proyeccciones, filtros, ordenamientos y límites que permitan contestar las siguientes preguntas.
+
+¿Qué comentarios ha hecho Greg Powell?
+
+{
+ filter: {
+  name: 'Greg Powell'
+ },
+ project: {
+  name: 1,
+  text: 1
+ }
+}
+
+¿Qué comentarios han hecho Greg Powell o Mercedes Tyler?
+
+{
+ filter: {
+  $or: [
+   {
+    name: 'Greg Powell'
+   },
+   {
+    name: 'Mercedes Tyler'
+   }
+  ]
+ },
+ project: {
+  name: 1,
+  text: 1
+ }
+}
+
+¿Cuál es el máximo número de comentarios en una película?
+
+{
+ project: {
+  title: 1,
+  num_mflix_comments: 1
+ },
+ sort: {
+  num_mflix_comments: -1
+ },
+ limit: 1
+}
+
+¿Cuál es título de las cinco películas más comentadas?
+
+{
+ project: {
+  title: 1,
+  num_mflix_comments: 1
+ },
+ sort: {
+  num_mflix_comments: -1
+ },
+ limit: 5
+}
