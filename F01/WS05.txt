@@ -1,6 +1,63 @@
-Reto 2
+Reto 1: Expresiones regulares 
 
-Usando la colección sample_airbnb.listingsAndReviews, agrega un filtro que permita obtener todas las publicaciones que tengan 50 o más comentarios, que la valoración sea mayor o igual a 80, que cuenten con conexión a Internet vía cable y estén ubicada en Brazil.
+Usando la base de datos sample_airbnblistingsAndReviews, realiza los siguientes filtros:
+
+Propiedades que no permitan fiestas.
+
+{
+ filter: {
+  house_rules: RegExp('no parties', i)
+ },
+ project: {
+  listing_url: 1,
+  name: 1,
+  house_rules: 1
+ }
+}
+
+Propiedades que admitan mascotas.
+
+{
+ filter: {
+  house_rules: RegExp('pets allowed', i)
+ },
+ project: {
+  listing_url: 1,
+  name: 1,
+  house_rules: 1
+ }
+}
+
+Propiedades que no permitan fumadores.
+
+{
+ filter: {
+  house_rules: RegExp('no smok(e|ing)', i)
+ },
+ project: {
+  listing_url: 1,
+  name: 1,
+  house_rules: 1
+ }
+}
+
+Propiedades que no permitan fiestas ni fumadores.
+
+{
+ filter: {
+  house_rules: RegExp('.*no smok(e|ing).*no parties.*', i)
+ },
+ project: {
+  listing_url: 1,
+  name: 1,
+  house_rules: 1
+ }
+}
+
+
+Reto 2: Notacion punto y arreglos
+
+Usando la colección sample_airbnb.listingsAndReviews, agrega un filtro que permita obtener todas las publicaciones que tengan 50 o más comentarios, que la valoración sea mayor o igual a 80, que cuenten con conexión a Internet vía cable y estén ubicada en Brazil. ***
 
 {
  filter: {
@@ -10,11 +67,31 @@ Usando la colección sample_airbnb.listingsAndReviews, agrega un filtro que perm
   'review_scores.review_scores_rating': {
    $gte: 80
   },
-  amenities: {
+  amenities: { 
    $in: [
-    'Internet'
+    RegExp('ethernet', i)
    ]
   },
   'address.country': RegExp('Brazil')
  }
 }
+
+Reto 3: Introducción a las agregaciones
+
+Usando la colección sample_airbnb.listingsAndReviews, mediante el uso de agregaciones, encontrar el número de publicaciones que tienen conexión a Internet, sea desde Wifi o desde cable (Ethernet). ***
+
+[ {
+    $project: {
+        _id: 1,
+        amenities: 1
+    }
+}, {
+    $match: {
+        amenities: {
+            $in: [/ethernet|wifi/i]
+        }
+    }
+}, {
+    $count: 'internet_connection'
+} ]
+
