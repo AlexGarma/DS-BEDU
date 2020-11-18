@@ -1,0 +1,127 @@
+Ejercicios
+
+Las consultas se realizarán sobre la base sample_training.
+
+Todas las consultas que realices deberás mantenerlas dentro del MongoDB Compass. Para hacer esto, da clic en el botón con los puntos ··· y en Toogle Query History. Busca la última consulta y agregala a favoritos presionando el íncono con la estrella ⭐.
+
+Obtén los datos de contacto de cada compañía.
+
+{
+ project: {
+  name: 1,
+  homepage_url: 1,
+  email_address: 1,
+  phone_number: 1,
+  offices: 1
+ }
+}
+
+Obtén la fuente de cada tweet.***
+
+{
+ project: {
+  name: 1,
+  twitter_username: 1
+ }
+}
+
+Obtén el nombre de todas las compañias fundadas en octubre.
+
+{
+ filter: {
+  founded_month: 10
+ },
+ project: {
+  name: 1
+ }
+}
+
+Obtén el nombre de todas las compañías fundadas en 2008.
+
+{
+ filter: {
+  founded_year: 2008
+ },
+ project: {
+  name: 1
+ }
+}
+
+Obtén todos los post del autor machine.
+
+{
+ filter: {
+  author: 'machine'
+ },
+ project: {
+  title: 1,
+  body: 1
+ }
+}
+
+Obtén todos los tweets provenientes de la web.
+
+{
+ filter: {
+  category_code: 'web'
+ },
+ project: {
+  name: 1,
+  twitter_username: 1
+ }
+}
+
+Obtén todas las compañías fundadas en octubre del 2008.
+
+{
+ filter: {
+  founded_year: 2008,
+  founded_month: 10
+ },
+ project: {
+  name: 1
+ }
+}
+
+Obtén todas las compañias con más de 50 empleados.
+
+{
+ filter: {
+  number_of_employees: {
+   $gte: 50
+  }
+ },
+ project: {
+  name: 1
+ }
+}
+
+Obtén las historias con número de comentarios entre 10 y 30.**
+
+Obtén la empresa con el menor número de empleados.
+
+{
+ project: {
+  name: 1
+ },
+ sort: {
+  number_of_employees: -1
+ },
+ limit: 1
+}
+
+Obtén la empresa con el mayor número de empleados.
+
+{
+ project: {
+  name: 1
+ },
+ sort: {
+  number_of_employees: 1
+ },
+ limit: 1
+}
+
+Obtén la historia más comentada.***
+
+Obtén la historia menos comentada.***
