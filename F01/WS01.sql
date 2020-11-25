@@ -5,9 +5,9 @@ USE tienda;
 SHOW TABLES;
 -- Reto 1
 -- Usando la base de datos tienda, muestra la descripción de las tablas articulo, puesto y venta.
-DESCRIBE puesto;
-DESCRIBE articulo;
-DESCRIBE venta;
+DESC puesto;
+DESC articulo;
+DESC venta;
 -- Reto 2
 -- Usando la base de datos tienda, escribe consultas que permitan responder las siguientes preguntas.
 -- ¿Cuál es el nombre de los empleados con el puesto 4?
