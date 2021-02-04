@@ -1,0 +1,117 @@
+---
+title: "R Notebook"
+output: html_notebook
+editor_options: 
+  chunk_output_type: console
+---
+
+##   Sesion 4. Algunas distribuciones, teorema central del límite y contraste de hipótesis
+
+### Distribuciones binomial, normal y t de Student : Reto 1 
+
+Consideremos un experimento binomial con n = 35 pruebas idénticas e independientes, en donde la probabilidad de éxito en cada prueba es p = 0.51. Encuentre lo siguiente:
+
+La probabilidad de observar exactamente 10 éxitos
+```{r}
+dbinom(10,35,.51)
+```
+
+La probabilidad de observar 10 o más exitos
+```{r}
+1-dbinom(9,35,.51)
+```
+El cuantil de orden 0.5
+```{r}
+qbinom(.5,35,.51)
+```
+
+Genere una muestra aleatoria de tamaño 1000 de esta distribución, construya una tabla de frecuencias relativas con los resultados y realice el gráfico de barras de los resultados que muestre las frecuencias relativas.
+```{r}
+rbinom(n = 1000,prob = .51,size = 35) %>% 
+  table() %>% 
+  as.tibble() %>% 
+  ggplot(aes(x = . , y = n))+
+  geom_bar(stat = "identity")
+```
+
+Distribución normal
+
+Considere una variable aleatoria normal con media 110 y desviación estándar 7. Realice lo siguiente:
+
+Grafique la función de densidad de probabilidad
+```{r}
+ggdistribution(dnorm,seq(90,130,0.1),mean = 110,sd = 7)
+```
+
+Encuentre la probabilidad de que la v.a. sea mayor o igual a 140
+```{r}
+pnorm(140,110,7,lower.tail = F)
+```
+
+Encuentre el cuantil de orden 0.95
+```{r}
+qnorm(.95,110,7)
+```
+
+Genere una muestra aleatoria de tamaño 1000 y realice el histograma de frecuencias relativas para esta muestra
+```{r}
+rnorm(n = 1000,110,7) %>% 
+  as.tibble() %>% 
+  ggplot(aes(x = value))+
+  geom_histogram(color = "white",binwidth = 2)
+```
+
+### Teorema central del límite, Algunos estimadores puntuales insesgados comunes: Reto 2
+Genere 1500 muestras de tamaño 67 de la distribución exponencial con parámetro 5
+Obtenga las 1500 medias correspondientes a cada una de las muestras
+Realice el histograma de frecuencias de las 1500 medias
+Encuentre la media muestral y desviación estándar muestral de las 1500 medias
+Compare la media muestral encontrada en el paso anterior con la media real (1/5) de la población de la cual provienen las muestras
+Compare la desviación estándar muestral encontrada con la desviación estándar real (1/5) de la población de la cual provienen las muestras pero dividida por 67 (el tamaño de las muestras)
+```{r}
+sapply(rep(67,1500), FUN = rexp,5) %>% 
+  colMeans() %>% 
+  as.tibble() %>% 
+  ggplot(aes(x = value))+
+  geom_histogram(color = "white")
+```
+$E(\bar{X}) = \mu$
+$s = \dfrac{\sigma}{\sqrt{n}}$
+```{r}
+# muestra
+sapply(rep(67,1500), FUN = rexp,5) %>% 
+  colMeans() %>% 
+  mean()
+#poblacion
+1/5
+
+#muestra
+sapply(rep(67,1500), FUN = rexp,5) %>% 
+  colMeans() %>% 
+  sd()
+
+#poblacion
+sqrt(1/25)
+
+#estimador
+sqrt(1/25)/sqrt(67)
+```
+
+Dada una muestra aleatoria de tamaño n = 10 de una distribución normal
+
+```{r}
+set.seed(124)
+muestra <- rnorm(n = 10, mean = 110, sd = 7) # muestra pequeña por lo tanto dist t, la media de la muestra se distribuye normal dado el terorema central del limite al comformar mas y mas muestras, no necesariamente la muestra se tiene que dist normal.
+tail(as.data.frame(muestra))
+```
+Estamos interesados en contrastar las hipótesis H0: mu = 120 vs H1: mu < 120 (contraste de cola inferior).
+
+Decida si rechazar o no la hipótesis nula si el nivel de significancia es alpha = 0.05
+Obtenga el p-value de la prueba   
+Lleve a cabo la prueba con la función t.test
+
+```{r}
+t.test(muestra,mu = 120,alternative = "less")
+```
+
+
